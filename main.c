@@ -2,10 +2,6 @@
 
 int main()
 {
-    int num;
-
-    printf("0 or 1? ");
-    scanf("%d", &num);
-    
+    printf("Hello World!\n");
     return 0;
 }
