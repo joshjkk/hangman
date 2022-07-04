@@ -15,13 +15,20 @@ struct Currency supported_currencies[NUMBER_OF_SUPPORTED_CURRENCIES] = {{"GBP"},
 // variables for conversion
 struct Currency from;
 struct Currency to;
-double money;
+double money = 0;
+double converted_money = 0;
+
+// main functions
 
 void main_menu();
 void currency_menu();
 void get_values();
 double convert_currencies();
-int check_currencies();
+
+// convert functions
+
+void gbp_to_usd(double money);
+void usd_to_gbp(double money);
 
 int main()
 {
@@ -71,9 +78,17 @@ void get_values()
 double convert_currencies()
 {
     // not implemented
-}
+}   
 
 void currency_menu()
-{
-    // not implemented
+{   
+    convert_currencies();
+ 
+    printf("\nCurrency Menu\n");
+    printf("----------------------------\n");
+    printf("Money: %g\n", money);
+    printf("From: %s\n", from.abbreviation);
+    printf("To: %s\n", to.abbreviation);
+    printf("----------------------------\n");
+    printf("Converted Money: %g\n", converted_money);
 }
