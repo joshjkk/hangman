@@ -4,7 +4,9 @@ This is coded in **C**. This is still WIP.
 - Main menu
 - Get the currencies and amount of money to convert from the user
 - 2 Currencies [USD, GBP]
-## I will implement:
-- Currency conversion menu
 - Currency conversion system
+- Currency conversion menu
+## I will implement:
 - System to change currency values
+- Allow user to use the program multiple times without quitting
+- Add more currencies
