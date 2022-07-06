@@ -3,32 +3,19 @@
 
 #define NUMBER_OF_SUPPORTED_CURRENCIES 2
 
-// each currency is a struct
+// a structure that contains an abbreviation 
 struct Currency
 {
     char abbreviation[3];
 };
 
-// check if the user tries to convert a supported currency
-struct Currency supported_currencies[NUMBER_OF_SUPPORTED_CURRENCIES] = {{"GBP"}, {"USD"}};
-
-// variables for conversion
-struct Currency from;
-struct Currency to;
-double money = 0;
-double converted_money = 0;
-
-// main functions
+// array of supported currencies    
+const struct Currency supported_currencies[NUMBER_OF_SUPPORTED_CURRENCIES] = { {"GBP"}, {"USD"} };
 
 void main_menu();
-void currency_menu();
-void get_values();
-double convert_currencies();
-
-// convert functions
-
-void gbp_to_usd(double money);
-void usd_to_gbp(double money);
+double get_amount();
+struct Currency *get_currencies();
+void currency_menu(const struct Currency from, const struct Currency to, const double money);
 
 int main()
 {
@@ -36,7 +23,7 @@ int main()
     return 0;
 }
 
-// hub of the converter
+// prompts options for the user to select
 void main_menu()
 {
     int choice;
@@ -50,45 +37,49 @@ void main_menu()
 
     scanf("%d", &choice);
 
-    switch (choice)
-    {
-        case 1:
-            get_values();
-            currency_menu();
-            break;
+    struct Currency *currencies = get_currencies();
+    struct Currency from = currencies[0];
+    struct Currency to = currencies[1];
+    double amount = get_amount();
 
-        case 2:
-            exit(0);
-    }
+    if (choice == 1)
+        currency_menu(from, to, amount);
+
+    free(currencies);
 }
 
-// get the currency from and to convert to, as well as the amount to convert
-void get_values()
+// gets the amount of money to convert
+double get_amount()
 {
+    double amount;
+    
+    printf("Amount of money to convert [3.10, 5 etc]: ");
+    scanf("%lf", &amount);
+
+    return amount;
+}
+
+// gets the abbreviations of the currencies wanted to convert from and to
+struct Currency *get_currencies()
+{
+    struct Currency *currencies = (struct Currency*)calloc(2, sizeof(struct Currency));
+
     printf("Currency to convert from [USD, GBP etc]: ");
-    scanf("%99s", &from.abbreviation);
+    scanf("%99s", currencies[0].abbreviation);
 
     printf("Currency to convert to [USD, GBP etc]: ");
-    scanf("%99s", &to.abbreviation);
+    scanf("%99s", currencies[1].abbreviation);
 
-    printf("Amount to convert: ");
-    scanf("%lf", &money);
+    return currencies;
 }
 
-double convert_currencies()
-{
-    // not implemented
-}   
-
-void currency_menu()
+// shows the converted amount of money in the currency wanted to convert to
+void currency_menu(struct Currency from, struct Currency to, double amount)
 {   
-    convert_currencies();
- 
     printf("\nCurrency Menu\n");
     printf("----------------------------\n");
-    printf("Money: %g\n", money);
+    printf("Money: %g\n", amount);
     printf("From: %s\n", from.abbreviation);
     printf("To: %s\n", to.abbreviation);
     printf("----------------------------\n");
-    printf("Converted Money: %g\n", converted_money);
 }
