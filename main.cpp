@@ -4,8 +4,6 @@
 #include <time.h>
 #include "words.h"
 
-#define WORDS_FILE "words.txt"
-
 std::string get_random_word()
 {
     int rand_i = rand() % all_words.size();
