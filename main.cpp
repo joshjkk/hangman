@@ -13,15 +13,16 @@ std::string get_random_word()
 class Word 
 {
     private:
-        std::string hidden_word;
+        std::string _hidden_word;
 
     public:
         std::string word = get_random_word();
+        int guesses_left = 5;
 
         Word()
         {
             for (char c : word)
-                hidden_word.append("_");
+                _hidden_word.append("_");
             
             print_hidden_word();
             std::cout << "Guess a letter to start!" << std::endl;
@@ -29,31 +30,123 @@ class Word
 
         void print_hidden_word()
         {
-            std::cout << hidden_word << std::endl;
+            std::cout << "\n" << _hidden_word << std::endl;
         }
 
         void guess(char guess_c)
         {
+            int correct_guess = 0;
+
             for (size_t i = 0; i < word.length(); i++)
             {
-                if (word[i] == guess_c && hidden_word[i] != guess_c)
-                    hidden_word[i] = guess_c;
+                if (word[i] == guess_c && _hidden_word[i] != guess_c)
+                {
+                    _hidden_word[i] = guess_c;
+                    correct_guess++;
+                }
             }
 
+            if (correct_guess == 0)
+                guesses_left--;
+
+            hanged_man(guesses_left);
             print_hidden_word();
             check_win();
         }
 
         void check_win()
         {
-            for (size_t i = 0; i < hidden_word.length(); i++)
+            for (size_t i = 0; i < _hidden_word.length(); i++)
             {
-                if (hidden_word[i] == '_')
+                if (_hidden_word[i] == '_')
                     return;
             }
 
-            std::cout << "Well done, you won!" << std::endl;
+            std::cout << "Well done!\nYou won with " << guesses_left + 1 << " guesses left!" << std::endl;
             exit(0);
+        }
+
+        void lose()
+        {
+            std::cout << "You lose!\nThe word was " << word << "!" << std::endl;
+            exit(0);
+        }
+
+        void hanged_man(int guesses_remaining)
+        {
+            std::cout << "\n";
+
+            if (guesses_remaining == 5)
+            {
+                std::cout << "----\n" <<
+                              "|   |\n" <<
+                              "|\n" <<    
+                              "|\n" <<
+                              "|\n" <<
+                              "--------" << std::endl;
+            }
+            
+            else if (guesses_remaining == 4)
+            {
+                std::cout << "----\n" <<
+                              "|   |\n" <<
+                              "|   O\n" <<    
+                              "|\n" <<
+                              "|\n" <<
+                              "--------" << std::endl;
+            }
+
+            else if (guesses_remaining == 3)
+            {
+                std::cout << "----\n" <<
+                              "|   |\n" <<
+                              "|   O\n" <<    
+                              "|   |\n" <<
+                              "|\n" <<
+                              "--------" << std::endl;
+            }
+
+            else if (guesses_remaining == 2)
+            {
+                std::cout << "----\n" <<
+                              "|   |\n" <<
+                              "|   O\n" <<    
+                              "|   |\\ \n" <<
+                              "|\n" <<
+                              "--------" << std::endl;
+            }
+
+            else if (guesses_remaining == 1)
+            {
+                std::cout << "----\n" <<
+                              "|   |\n" <<
+                              "|   O\n" <<    
+                              "|  /|\\ \n" <<
+                              "|\n" <<
+                              "--------" << std::endl;
+            }
+
+            else if (guesses_remaining == 0)
+            {
+                std::cout << "----\n" <<
+                              "|   |\n" <<
+                              "|   O\n" <<    
+                              "|  /|\\ \n" <<
+                              "|  /\n" <<
+                              "--------" << std::endl;
+            }
+
+            else
+            {
+                std::cout << "----\n" <<
+                              "|   |\n" <<
+                              "|   O\n" <<    
+                              "|  /|\\ \n" <<
+                              "|  / \\ \n" <<
+                              "--------" << std::endl;
+
+                lose();
+            }
         }
 };
 
