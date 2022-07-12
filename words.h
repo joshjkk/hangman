@@ -5,7 +5,7 @@
 #include <vector>
 
 std::vector<std::string> all_words = { 
-    "NIGGER", "BALLS", "COCK", "NIGGERBALLSHD"
+    "JOSHJKK", "GITHUBJOSHJKK", "WORDLE", "CPLUSPLUS"
  };
 
 #endif
